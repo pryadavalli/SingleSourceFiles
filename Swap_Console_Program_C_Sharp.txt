@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace HackerRankTests
+{
+    class Result
+    {
+        //THIS FUNCTION FINDS THE MINUMUM SWAPS REQUIRED TO SORT THE INPUT NUMBERS
+        public static void countSwaps(long[] a)
+        {
+            List<long> unsortedList = a.ToList();
+
+            //have a sorted list for the same numbers
+            List<long> sortedList = a.ToList();
+            sortedList.Sort();
+
+            int count = 0; // 
+            int i = 0;
+            foreach (var item1 in sortedList)
+            {
+                for (int k = i; k < unsortedList.Count; k++)
+                {
+                    if (item1 != unsortedList[k])
+                    {
+                        int index1 = unsortedList.IndexOf(item1);
+
+                        long temp = unsortedList[k];
+                        unsortedList[k] = unsortedList[index1];
+                        unsortedList[index1] = temp;
+                        ++count;
+                    }
+                    break;
+                }
+                i++;
+            }
+
+            Console.WriteLine("No. Of minumum Swaps required to Sort the above Array = " + count);
+        }
+    }
+
+    class Program
+    {
+     
+
+        static void Main(string[] args)
+        {
+
+            // int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), aTemp => Convert.ToInt32(aTemp));
+
+            long[] arr = new long[1000050];
+            //input is taken as random numbers and length of the input
+            Console.WriteLine("Please enter the total no.of inputs required");
+            long n = Convert.ToInt64(Console.ReadLine());
+       
+            Console.WriteLine("Here is the random input as per above entry");
+
+            // just to print the actual input used to find the minimum swaps required to sort this input
+            for (long k = 0; k < n; k++)
+            {
+                arr[k] = new Random().Next(10000,19999);
+            }
+
+            int length = arr.Where(x => x != 0).ToArray().Length;
+
+            long[] inputArray = arr.Where(x => x != 0).ToArray();
+
+            foreach (var item in inputArray)
+            {
+                Console.Write(item + "    " );
+            }
+
+            Result.countSwaps(inputArray);
+
+            Console.ReadLine();
+
+        }
+    }
+}
